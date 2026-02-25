@@ -6,46 +6,85 @@ use App\Models\product;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreproductRequest;
 use App\Http\Requests\UpdateproductRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $products = product::all();
+        return response()->json([
+           'status' => true,
+           'message' => 'get all products',
+           'data' => $products
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreproductRequest $request)
+    public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(),[
+           'name' => 'required|string|max:50',
+           'price' => 'required|string|max:50',
+           'description' => 'nullable|max:500',
+        ]);
+
+        if ($validator->fails())
+        {
+            return response()->json([
+                'success' => false,
+                'message' => 'error',
+                'data' => $validator->errors()
+            ])  ;
+        }
+        $product = product::query()->create($request->all());
+        return response()->json([
+            'status' => true,
+            'message' => 'create product successful',
+            'data' => $product
+        ]);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(product $product)
     {
-        //
+        return response()->json([
+           'success' => true,
+           'message' => 'get product',
+            'data' => $product
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateproductRequest $request, product $product)
+    public function update(Request $request, product $product)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            'name' => 'required|string|max:50',
+            'price' => 'required|string|max:50',
+            'description' => 'nullable|max:500',
+        ]);
+
+        if ($validator->fails())
+        {
+            return response()->json([
+                'success' => false,
+                'message' => 'error',
+                'data' => $validator->errors()
+            ])  ;
+        }
+        $product->update($request->all());
+        return response()->json([
+            'status' => true,
+            'message' => 'update product successful',
+            'data' => $product
+        ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(product $product)
     {
-        //
+        $product->delete();
+        return response()->json([
+            'status' => true,
+            'message' => 'delete product successful',
+            'data' => $product
+        ]);
     }
 }
