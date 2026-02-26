@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes\ApiResponseClass;
 use App\Models\product;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreproductRequest;
@@ -14,11 +15,7 @@ class ProductController extends Controller
     public function index()
     {
         $products = product::all();
-        return response()->json([
-           'status' => true,
-           'message' => 'get all products',
-           'data' => $products
-        ]);
+        return ApiResponseClass::apiResponse(true,'get all products',$products,200);
     }
 
     public function store(Request $request)
@@ -31,27 +28,15 @@ class ProductController extends Controller
 
         if ($validator->fails())
         {
-            return response()->json([
-                'success' => false,
-                'message' => 'error',
-                'data' => $validator->errors()
-            ])  ;
+            return ApiResponseClass::apiResponse(false,'validation false',$validator->errors(),422);
         }
         $product = product::query()->create($request->all());
-        return response()->json([
-            'status' => true,
-            'message' => 'create product successful',
-            'data' => $product
-        ]);
+        return ApiResponseClass::apiResponse(true,'create product successful',$product,200);
     }
 
     public function show(product $product)
     {
-        return response()->json([
-           'success' => true,
-           'message' => 'get product',
-            'data' => $product
-        ]);
+        return ApiResponseClass::apiResponse(true,'get product',$product,200);
     }
 
     public function update(Request $request, product $product)
@@ -64,27 +49,16 @@ class ProductController extends Controller
 
         if ($validator->fails())
         {
-            return response()->json([
-                'success' => false,
-                'message' => 'error',
-                'data' => $validator->errors()
-            ])  ;
+            return ApiResponseClass::apiResponse(false,'validation false',$validator->errors(),422);
+
         }
         $product->update($request->all());
-        return response()->json([
-            'status' => true,
-            'message' => 'update product successful',
-            'data' => $product
-        ]);
+        return ApiResponseClass::apiResponse(true,'update product successful',$product,200);
     }
 
     public function destroy(product $product)
     {
         $product->delete();
-        return response()->json([
-            'status' => true,
-            'message' => 'delete product successful',
-            'data' => $product
-        ]);
+        return ApiResponseClass::apiResponse(true,'delete product successful',null,200);
     }
 }
