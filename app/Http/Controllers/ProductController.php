@@ -4,9 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Classes\ApiResponseClass;
 use App\Models\product;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreproductRequest;
-use App\Http\Requests\UpdateproductRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 

@@ -12,4 +12,13 @@ class ApiResponseClass
             'data' => $data
         ], $code);
     }
+
+    public static function errorResponse($error,$message,$code)
+    {
+        return response()->json([
+           'error' => $error,
+           'message' => $message,
+           'code' => $code
+        ]);
+    }
 }
