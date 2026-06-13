@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Classes\ApiResponseClass;
+use App\Http\Resources\ProductResource;
 use App\Models\product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -33,7 +34,7 @@ class ProductController extends Controller
 
     public function show(product $product)
     {
-        return ApiResponseClass::apiResponse(true,'get product',$product,200);
+        return ApiResponseClass::apiResponse(true,'get product',new ProductResource($product),200);
     }
 
     public function update(Request $request, product $product)

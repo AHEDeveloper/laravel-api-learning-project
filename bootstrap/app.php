@@ -24,7 +24,8 @@ return Application::configure(basePath: dirname(__DIR__))
         });
 
         $exceptions->render(function (MethodNotAllowedHttpException $exception){
-            return ApiResponseClass::errorResponse('MethodNotAllowedHttpException',$exception->getMessage(),'405');
+            return ApiResponseClass::errorResponse('MethodNotAllowedHttpException',$exception->getMessage(),405);
         });
+
 
     })->create();
