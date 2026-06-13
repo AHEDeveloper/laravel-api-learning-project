@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Classes\ApiResponseClass;
+use App\Http\Resources\ProductCollection;
 use App\Http\Resources\ProductResource;
 use App\Models\product;
 use Illuminate\Http\Request;
@@ -13,7 +14,8 @@ class ProductController extends Controller
     public function index()
     {
         $products = product::all();
-        return ApiResponseClass::apiResponse(true,'get all products',$products,200);
+        return ApiResponseClass::apiResponse(true,'get all products',new ProductCollection($products),200);
+//        return ProductResource::collection($products);
     }
 
     public function store(Request $request)
