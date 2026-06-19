@@ -12,6 +12,8 @@ class ProductResource extends JsonResource
      *
      * @return array<string, mixed>
      */
+    public $preservekeys = true;
+
     public function toArray(Request $request): array
     {
         return [

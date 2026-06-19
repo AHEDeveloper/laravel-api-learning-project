@@ -14,12 +14,16 @@ class ProductCollection extends ResourceCollection
      */
     public function toArray(Request $request): array
     {
-        return [
-            'data' => $this->collection,
+        return parent::toArray($request);
+    }
+
+    public function with(Request $request): array
+    {
+        return[
             'meta' => [
                 'total_collection' => $this->collection->count()
             ]
-
         ];
     }
+
 }

@@ -14,8 +14,13 @@ class ProductController extends Controller
     public function index()
     {
         $products = product::all();
-        return ApiResponseClass::apiResponse(true,'get all products',new ProductCollection($products),200);
-//        return ProductResource::collection($products);
+//        return ApiResponseClass::apiResponse(true,'get all products',new ProductCollection($products),200);
+
+        return (new ProductCollection($products))->additional([
+            'meta' => $products->count()
+        ]);
+
+        return new ProductCollection($products);
     }
 
     public function store(Request $request)
