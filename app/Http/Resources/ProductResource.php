@@ -22,4 +22,11 @@ class ProductResource extends JsonResource
             'created_at' => $this->created_at->format('Y-m-d')
         ];
     }
+
+    public function paginationInformation($request, $paginated, $default)
+    {
+        $default['links']['custom'] = 'https://example.com';
+
+        return $default;
+    }
 }

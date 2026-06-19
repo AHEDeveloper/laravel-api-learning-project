@@ -13,14 +13,18 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = product::all();
-//        return ApiResponseClass::apiResponse(true,'get all products',new ProductCollection($products),200);
+        $products = product::query()->paginate(5);
+        return ApiResponseClass::apiResponse(true,'get all products',[
+            'products' => ProductResource::collection($products),
+            'links' => ProductResource::collection($products)->response()->getData()->links,
+            'meta' => ProductResource::collection($products)->response()->getData()->meta
+        ],200);
 
 //        return (new ProductCollection($products))->additional([
 //            'meta' => $products->count()
 //        ]);
 
-        return new ProductCollection($products);
+//        return new ProductCollection($products);
     }
 
     public function store(Request $request)
