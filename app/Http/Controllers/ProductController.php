@@ -16,9 +16,9 @@ class ProductController extends Controller
         $products = product::all();
 //        return ApiResponseClass::apiResponse(true,'get all products',new ProductCollection($products),200);
 
-        return (new ProductCollection($products))->additional([
-            'meta' => $products->count()
-        ]);
+//        return (new ProductCollection($products))->additional([
+//            'meta' => $products->count()
+//        ]);
 
         return new ProductCollection($products);
     }
@@ -41,7 +41,12 @@ class ProductController extends Controller
 
     public function show(product $product)
     {
-        return ApiResponseClass::apiResponse(true,'get product',new ProductResource($product),200);
+//        return ApiResponseClass::apiResponse(true,'get product',new ProductResource($product),200);
+        return (new ProductResource($product))->additional([
+            'meta'=>[
+                'title' => $product->name
+            ]
+        ]);
     }
 
     public function update(Request $request, product $product)
