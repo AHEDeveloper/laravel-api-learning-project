@@ -23,10 +23,4 @@ class ProductResource extends JsonResource
         ];
     }
 
-    public function paginationInformation($request, $paginated, $default)
-    {
-        $default['links']['custom'] = 'https://example.com';
-
-        return $default;
-    }
 }
