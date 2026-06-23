@@ -54,4 +54,21 @@ class AuthController extends Controller
         $user['token'] = $token;
         return ApiResponseClass::apiResponse(true, 'create token and user successful', $user, 200);
     }
+
+    public function logout()
+    {
+        auth()->user()->currentAccessToken()->delete();
+        return response()->json(['message' => 'logout']);
+    }
+
+    public function logoutWithTokens()
+    {
+        auth()->user()->tokens()->delete();
+        return response()->json(['message' => 'logout']);
+    }
+    public function logoutSpecificToken($tokenId)
+    {
+        auth()->user()->tokens()->where('id',$tokenId)->delete();
+        return response()->json(['message' => 'logout']);
+    }
 }
